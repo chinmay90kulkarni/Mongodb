@@ -1,0 +1,68 @@
+{
+	first_name:"Chinmay",
+	last_name:"Kulkarni",
+	subscription: ["Google","IBM"],
+	address :{
+		street:"Asra",
+		city:"Solapur"
+	}
+	contacts:[
+		{name:"Shubham",relationship:"friend"},
+		{name:"Aditya",relationship:"brother"}
+	]	
+}
+
+----------------------------------------------
+To create user:
+db.createUser({
+	user:"Chinmay",
+	pwd:"1234",
+	roles:["readWrite","dbAdmin"]
+});
+
+-----------------------------------------------
+Create Collection:
+db.createCollection('customers');         //db.collections
+
+-----------------------------------------------
+To insert doc in specific collection:
+db.customers.insert([
+	{
+	first:"Chinmay123",
+	last:"Kulkarni123"
+	},
+	{
+	first:"Chinmay321",
+	last:"Kulkarni321"
+	},
+	{
+	first:"Chinmay333",
+	last:"Kulkarni111"
+	}
+]);
+------------------------------------------
+To update collection
+db.customers.update(
+	{firstName:"Chinmay"},  //field based on which updation performed!
+	{first:"Chinmay",last:"Kulkarni",gender:"Male"}   //what updatation should be performed!
+);
+-------------------------------------------
+To append contact if first: is matched with string "Chinmay".
+db.customers.update(
+	{first:"Chinmay"},
+	{$set:{contact:"8793222769"}}
+)
+-----------------------------------------------------
+To remove one document field is $unset
+db.customers.update(
+	{first:"Chinmay"},
+	{$unset:{gender:"a"}
+)
+------------------------------------------------------
+Use if upsert command. (If value based on which we want to update records are not presnt in doc, upsert:true add it dynamically.
+db.customers.update(
+	{first:"Chinmay007"},  
+	{occupation:"CIA Agent"},
+	{upsert:true}
+)
+
